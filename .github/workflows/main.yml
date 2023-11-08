@@ -1,16 +1,23 @@
-name: Package
-run-name: Create Package
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  compile:
-    name: Compile and Upload
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-      - run: npm i
-      - run: npm run compile
-      - uses: actions/upload-artifact@v3.1.3
-        with:
-          name: venticordstudio.vsix
-          path: venticordstudio-0.0.1.vsix
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - run: npm install
+    - run: xvfb-run -a npm test
+      if: runner.os == 'Linux'
+    - run: npm test
+      if: runner.os != 'Linux'
