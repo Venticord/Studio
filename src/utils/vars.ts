@@ -16,3 +16,25 @@ export function vtcStudioHTML(iconURI: vscode.Uri) {
     </body>
     </html>`
 }
+export const pluginFile = `
+/*
+Thanks for using Venticord Studio!
+- the personal creator of Venticord and VTC Studio: freesmart!
+*/
+import definePlugin from "@utils/types";
+
+export default definePlugin({
+    name: "&PluginName&",
+    description: "Replace me!",
+    authors: [
+        {
+            id: 2763n,
+            name: "Pencil",
+        },
+    ],
+    patches: [],
+    // It might be likely you could delete these and go make patches above!
+    start() {},
+    stop() {},
+});
+`

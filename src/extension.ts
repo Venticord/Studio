@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as vars from './utils/vars';
+import { posix } from 'path';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -20,8 +21,6 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('Hello, Ventineer! Version ' + vars.ver + ' is working well!');
 	});
 	let recruitment = vscode.commands.registerCommand('venticordstudio.VTCOpen', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
 		const panel = vscode.window.createWebviewPanel(
 			'vtcWebView',
 			'VTC Studio',
@@ -31,13 +30,32 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		  );
 		  const iconURI = panel.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'rsc', 'studioIcon.png'));
-	
+		  console.log("Icon URI:" + vscode.Uri.joinPath(context.extensionUri, 'rsc', 'studioIcon.png'))
+		  console.log("Icon URI asWebviewUri:" + iconURI)
 		  // And set its HTML content
 		  panel.webview.html = vars.vtcStudioHTML(iconURI);
 	});
-
+	let ondatgoodcuz = vscode.commands.registerCommand('venticordstudio.PluginCreate', async () => {
+		const pluginName = await vscode.window.showInputBox({ title: "Put your plugin name here..." });
+		if (pluginName && vscode.workspace.workspaceFolders) {
+			try {
+				let wf = vscode.workspace.workspaceFolders[0].uri.path ;
+				if (wf.endsWith("src/")) {
+					vscode.window.showInformationMessage("You're in the src folder!")
+					vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/plugins/", pluginName))
+					vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/plugins/", pluginName, "/index.tsx"), Buffer.from(vars.pluginFile.replace("&PluginName&", pluginName)))
+				} else {
+					vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/src/plugins/", pluginName))
+					vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/src/plugins/", pluginName, "/index.tsx"), Buffer.from(vars.pluginFile.replace("&PluginName&", pluginName)))
+				}
+				vscode.window.showInformationMessage("You have created " + pluginName + " in your Vencord folder!")
+			} catch(err) {
+				vscode.window.showErrorMessage("Error creating folder: " + err);
+			}
+	}});
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(recruitment);
+	context.subscriptions.push(ondatgoodcuz);
 }
 
 // This method is called when your extension is deactivated
