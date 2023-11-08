@@ -22,6 +22,10 @@ jobs:
       if: runner.os == 'Linux'
     - run: npm run compile
       if: runner.os != 'Linux'
+    - run: dir
+      if: runner.os == 'Windows'
+    - run: ls
+      if: runner.os != 'Windows'
     - uses: actions/upload-artifact@v3.1.3
       if: runner.os == 'MacOS'
       with:
