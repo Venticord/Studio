@@ -3,6 +3,7 @@
   "displayName": "VTC Studio",
   "description": "Create for Venticord/Vencord! Brought to you by the creator of Venticord!",
   "version": "0.0.1",
+  "repository": "https://github.com/Venticord/Studio",
   "engines": {
     "vscode": "^1.84.0"
   },
