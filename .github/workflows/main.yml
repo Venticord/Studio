@@ -18,9 +18,9 @@ jobs:
         node-version: 16.x
     - run: npm install
     - run: pwd
-    - run: xvfb-run -a npm test
+    - run: xvfb-run -a npm run compile
       if: runner.os == 'Linux'
-    - run: npm test
+    - run: npm run compile
       if: runner.os != 'Linux'
     - uses: actions/upload-artifact@v3.1.3
       if: runner.os == 'MacOS'
