@@ -1,0 +1,14 @@
+name: Package
+run-name: Create Package
+on: [push]
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+      - run: npm run compile
+      - uses: actions/upload-artifact@v3.1.3
+        with:
+          name: venticordstudio.vsix
+          path: ./venticordstudio-*.vsix
