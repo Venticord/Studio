@@ -4,7 +4,8 @@
   "description": "Create for Venticord/Vencord! Brought to you by the creator of Venticord!",
   "version": "0.0.1",
   "repository": "https://github.com/Venticord/Studio",
-  "icon": "src/rsc/studioIcon.png",
+  "icon": "studioIcon.png",
+  "publisher": "Josiauh",
   "engines": {
     "vscode": "^1.84.0"
   },
