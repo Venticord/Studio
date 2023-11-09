@@ -1,7 +1,7 @@
 // Variables
 import * as vscode from 'vscode';
 
-export const ver = "1.0.0"
+export const ver = "1.0.1"
 export function vtcStudioHTML(iconURI: vscode.Uri) {
 	return `<!DOCTYPE html>
     <html lang="en">

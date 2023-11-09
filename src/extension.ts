@@ -53,6 +53,24 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showErrorMessage("Error creating folder: " + err);
 			}
 	}});
+	let me = vscode.commands.registerCommand('venticordstudio.UserPlugin', async () => {
+		const pluginName = await vscode.window.showInputBox({ title: "Put your plugin name here..." });
+		if (pluginName && vscode.workspace.workspaceFolders) {
+			try {
+				let wf = vscode.workspace.workspaceFolders[0].uri.path ;
+				if (wf.endsWith("src/")) {
+					vscode.window.showInformationMessage("You're in the src folder!")
+					vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/userplugins/", pluginName))
+					vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/userplugins/", pluginName, "/index.tsx"), Buffer.from(vars.pluginFile.replace("&PluginName&", pluginName)))
+				} else {
+					vscode.workspace.fs.createDirectory(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/src/userplugins/", pluginName))
+					vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "/src/userplugins/", pluginName, "/index.tsx"), Buffer.from(vars.pluginFile.replace("&PluginName&", pluginName)))
+				}
+				vscode.window.showInformationMessage("You have created " + pluginName + " in your Vencord folder!")
+			} catch(err) {
+				vscode.window.showErrorMessage("Error creating folder: " + err);
+			}
+	}});
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(recruitment);
 	context.subscriptions.push(ondatgoodcuz);

@@ -2,7 +2,7 @@
   "name": "venticordstudio",
   "displayName": "VTC Studio",
   "description": "Create for Venticord/Vencord! Brought to you by the creator of Venticord!",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "repository": "https://github.com/Venticord/Studio",
   "icon": "studioIcon.png",
   "publisher": "Josiauh",
@@ -27,6 +27,10 @@
       {
         "command": "venticordstudio.PluginCreate",
         "title": "Create a Plugin (VTC Studio)"
+      },
+      {
+        "command": "venticordstudio.UserPlugin",
+        "title": "Create a UserPlugin (VTC Studio)"
       }
     ]
   },
